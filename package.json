@@ -1,0 +1,11 @@
+{
+  "name": "captiq",
+  "version": "1.0.0",
+  "description": "AI Social Media Content Generator",
+  "scripts": {
+    "start": "echo 'Run locally using vercel dev'"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0"
+  }
+}

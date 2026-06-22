@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captiq - AI Social Media Content Generator</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="ph-fill ph-sparkle"></i>
+                <h1>Captiq</h1>
+            </div>
+            <p class="subtitle">AI-powered social media content generation for creators.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-layout">
+            <!-- Left Panel: Inputs -->
+            <section class="input-panel glass-panel">
+                <form id="content-form">
+                    <div class="form-group">
+                        <label for="description">
+                            <i class="ph ph-text-align-left"></i>
+                            Post Description
+                        </label>
+                        <textarea 
+                            id="description" 
+                            placeholder="What is your post about? e.g. Sharing 3 tips for staying productive while working from home." 
+                            rows="5" 
+                            required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="niche">
+                                <i class="ph ph-target"></i>
+                                Niche
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="niche" required>
+                                    <option value="" disabled selected>Select Niche</option>
+                                    <option value="Travel">Travel</option>
+                                    <option value="Fitness">Fitness</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Motivation">Motivation</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Meme">Meme</option>
+                                    <option value="Personal Brand">Personal Brand</option>
+                                </select>
+                                <i class="ph ph-caret-down select-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tone">
+                                <i class="ph ph-smiley"></i>
+                                Tone
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="tone" required>
+                                    <option value="" disabled selected>Select Tone</option>
+                                    <option value="Funny">Funny</option>
+                                    <option value="Emotional">Emotional</option>
+                                    <option value="Professional">Professional</option>
+                                    <option value="Inspirational">Inspirational</option>
+                                    <option value="Luxury">Luxury</option>
+                                    <option value="Gen Z">Gen Z</option>
+                                </select>
+                                <i class="ph ph-caret-down select-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="generate-btn" class="primary-btn">
+                        <span class="btn-text">Generate Content</span>
+                        <i class="ph-bold ph-magic-wand"></i>
+                    </button>
+                    <div id="error-message" class="error-message hidden"></div>
+                </form>
+            </section>
+
+            <!-- Right Panel: Outputs -->
+            <section class="output-panel glass-panel">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="captions">Captions <span class="badge">10</span></button>
+                    <button class="tab-btn" data-tab="hooks">Hooks <span class="badge">5</span></button>
+                    <button class="tab-btn" data-tab="hashtags">Hashtags <span class="badge">15</span></button>
+                </div>
+
+                <div class="tab-content-area">
+                    <div id="empty-state" class="empty-state">
+                        <i class="ph-duotone ph-sparkle"></i>
+                        <p>Fill out the details on the left and hit generate to see your content.</p>
+                    </div>
+
+                    <!-- Loader -->
+                    <div id="loader" class="loader hidden">
+                        <div class="spinner"></div>
+                        <p>Generating your viral content...</p>
+                    </div>
+
+                    <!-- Captions Content -->
+                    <div id="captions-content" class="content-view hidden">
+                        <!-- Items injected via JS -->
+                    </div>
+
+                    <!-- Hooks Content -->
+                    <div id="hooks-content" class="content-view hidden">
+                        <!-- Items injected via JS -->
+                    </div>
+
+                    <!-- Hashtags Content -->
+                    <div id="hashtags-content" class="content-view hidden">
+                        <div class="hashtags-header">
+                            <button id="copy-all-hashtags" class="secondary-btn">
+                                <i class="ph ph-copy"></i> Copy All
+                            </button>
+                        </div>
+                        <div id="hashtags-grid" class="hashtags-grid">
+                            <!-- Items injected via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
