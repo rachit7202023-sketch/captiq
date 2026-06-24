@@ -44,6 +44,8 @@ Return ONLY valid JSON in this format:
 
     const data = await response.json();
 
+console.log("OPENROUTER RESPONSE:", JSON.stringify(data));
+
     const text = data.choices[0].message.content;
 
     const result = JSON.parse(text);
