@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-001" });
 
     const prompt = `You are an expert social media manager.
 I need content for a social media post.
