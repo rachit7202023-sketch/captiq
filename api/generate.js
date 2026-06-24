@@ -1,56 +1,57 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
     const { description, niche, tone } = req.body;
-    
-    if (!description || !niche || !tone) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({ error: 'Server misconfiguration: Missing API Key' });
-    }
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "meta-llama/llama-3.1-8b-instruct:free",
+        messages: [
+          {
+            role: "user",
+            content: `
+You are an expert social media manager.
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-    const prompt = `You are an expert social media manager.
-I need content for a social media post.
-Description: "${description}"
+Description: ${description}
 Niche: ${niche}
 Tone: ${tone}
 
-Generate exactly:
-- 10 distinct, highly engaging captions
-- 5 catchy, scroll-stopping hooks
-- 15 highly relevant hashtags (without the # symbol, just the word)
+Generate:
+- 10 captions
+- 5 hooks
+- 15 hashtags
 
-Respond strictly in JSON format matching this schema:
+Return ONLY valid JSON in this format:
+
 {
-  "captions": ["string"],
-  "hooks": ["string"],
-  "hashtags": ["string"]
-}`;
+  "captions": [],
+  "hooks": [],
+  "hashtags": []
+}
+`
+          }
+        ]
+      })
+    });
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
+    const data = await response.json();
 
-    let jsonStr = text.trim();
-    if (jsonStr.startsWith('```')) {
-        jsonStr = jsonStr.replace(/^```(json)?\n/, '').replace(/\n```$/, '');
-    }
-    
-    const data = JSON.parse(jsonStr);
-    return res.status(200).json(data);
+    const text = data.choices[0].message.content;
+
+    const result = JSON.parse(text);
+
+    return res.status(200).json(result);
 
   } catch (error) {
-    console.error('API Error:', error);
-    return res.status(500).json({ error: 'Failed to generate content' });
+    console.error(error);
+    return res.status(500).json({ error: "Failed to generate content" });
   }
 }
