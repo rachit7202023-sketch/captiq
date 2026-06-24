@@ -13,8 +13,13 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "meta-llama/llama-3.1-8b-instruct",
-        messages: [
+  model: "meta-llama/llama-3.1-8b-instruct",
+
+  response_format: {
+    type: "json_object"
+  },
+
+  messages: [
           {
             role: "user",
             content: `
@@ -29,14 +34,21 @@ Generate:
 - 5 hooks
 - 15 hashtags
 
-Return ONLY valid JSON in this format:
+IMPORTANT:
+Return ONLY valid JSON.
+Do NOT write "Here's the output".
+Do NOT write explanations.
+Do NOT use markdown.
+Do NOT use ```json.
+
+Return ONLY:
 
 {
   "captions": [],
   "hooks": [],
   "hashtags": []
 }
-`
+
           }
         ]
       })
