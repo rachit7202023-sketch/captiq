@@ -48,7 +48,12 @@ console.log("OPENROUTER RESPONSE:", JSON.stringify(data));
 
     const text = data.choices[0].message.content;
 
-    const result = JSON.parse(text);
+const jsonStart = text.indexOf("{");
+const jsonEnd = text.lastIndexOf("}") + 1;
+
+const jsonText = text.substring(jsonStart, jsonEnd);
+
+const result = JSON.parse(jsonText);
 
     return res.status(200).json(result);
 
